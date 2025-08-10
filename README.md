@@ -34,3 +34,52 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+# Framework y React
+npm install next@latest react@latest react-dom@latest
+
+# TypeScript
+npm install --save-dev typescript @types/node @types/react @types/react-dom
+
+# Styling
+npm install tailwindcss postcss autoprefixer
+npm install @tailwindcss/forms @tailwindcss/typography
+npm install clsx tailwind-merge
+npm install class-variance-authority
+
+# UI Components (shadcn/ui)
+npx shadcn-ui@latest init
+npx shadcn-ui@latest add button input form card toast dialog alert spinner
+
+# Estado global
+npm install zustand
+
+# Forms y validación
+npm install react-hook-form @hookform/resolvers zod
+
+# Data fetching
+npm install @tanstack/react-query
+npm install axios
+
+# Autenticación
+npm install js-cookie
+npm install --save-dev @types/js-cookie
+
+# Google OAuth
+npm install @google-oauth2/client
+
+# Iconos
+npm install lucide-react
+
+# Tema dark/light
+npm install next-themes
+
+# Utilities
+npm install date-fns
+npm install react-hot-toast
+
+# Development
+npm install --save-dev eslint eslint-config-next
+npm install --save-dev @tailwindcss/eslint-plugin
+npm install --save-dev prettier prettier-plugin-tailwindcss
