@@ -1,85 +1,245 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 JobPlatform - Plataforma de Empleo Full Stack
 
-## Getting Started
+Una plataforma de empleo moderna construida con **Next.js 14**, **.NET 8** y **SQL Server**, similar a ComputraBajo, Indeed o LinkedIn Jobs.
 
-First, run the development server:
+## 🏗️ Arquitectura del Sistema
+
+### **Backend (.NET 8)**
+- **API REST** con autenticación JWT
+- **Clean Architecture** simplificada (3 capas)
+- **Dapper ORM** con Stored Procedures
+- **Google OAuth** integrado
+- **SQL Server** como base de datos
+- **Serilog** para logging
+- **Swagger** para documentación
+
+### **Frontend (Next.js 14)**
+- **App Router** con Route Groups
+- **Clean Architecture** con separación de capas
+- **TypeScript** end-to-end
+- **shadcn/ui** + **Tailwind CSS**
+- **Zustand** para estado global
+- **React Query** para data fetching
+- **React Hook Form** + **Zod** para validaciones
+
+## 🎯 Funcionalidades Principales
+
+### **Autenticación**
+- ✅ Login/Registro tradicional
+- ✅ Google OAuth
+- ✅ JWT con Refresh Tokens
+- ✅ Manejo de roles (JobSeeker, Employer, Admin, Moderator)
+- ✅ Protección de rutas
+- ✅ Middleware de seguridad
+
+### **Gestión de Usuarios**
+- ✅ Perfiles de usuario
+- ✅ Panel de administración
+- ✅ Sistema de roles
+- ✅ Activación/Desactivación de usuarios
+
+### **UI/UX**
+- ✅ Tema dark/light
+- ✅ Responsive design
+- ✅ Componentes modernos
+- ✅ Loading states
+- ✅ Error boundaries
+- ✅ Toast notifications
+
+## 🚀 Instalación y Configuración
+
+### **Backend (.NET 8)**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Crear proyecto API
+dotnet new webapi -n JobPlatform.Api
+cd JobPlatform.Api
+
+# Instalar paquetes NuGet
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package Microsoft.AspNetCore.Authentication.Google
+dotnet add package System.IdentityModel.Tokens.Jwt
+dotnet add package Dapper
+dotnet add package Microsoft.Data.SqlClient
+dotnet add package BCrypt.Net-Next
+dotnet add package Serilog.AspNetCore
+
+# Configurar appsettings.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**appsettings.json:**
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=JobPlatformDB;Trusted_Connection=true;TrustServerCertificate=true;"
+  },
+  "JwtSettings": {
+    "SecretKey": "your-super-secret-key-256-bits-minimum",
+    "Issuer": "JobPlatformAPI",
+    "Audience": "JobPlatformClient",
+    "AccessTokenExpirationMinutes": 60,
+    "RefreshTokenExpirationDays": 7
+  },
+  "GoogleAuth": {
+    "ClientId": "your-google-client-id.googleusercontent.com",
+    "ClientSecret": "your-google-client-secret"
+  }
+}
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### **Frontend (Next.js 14)**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Crear proyecto Next.js
+npx create-next-app@latest jobplatform-frontend --typescript --tailwind --eslint --app
+cd jobplatform-frontend
 
-## Learn More
+# Instalar dependencias principales
+npm install zustand react-hook-form @hookform/resolvers zod @tanstack/react-query axios js-cookie next-themes date-fns clsx tailwind-merge class-variance-authority
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-# Framework y React
-npm install next@latest react@latest react-dom@latest
-
-# TypeScript
-npm install --save-dev typescript @types/node @types/react @types/react-dom
-
-# Styling
-npm install tailwindcss postcss autoprefixer
-npm install @tailwindcss/forms @tailwindcss/typography
-npm install clsx tailwind-merge
-npm install class-variance-authority
-
-# UI Components (shadcn/ui)
+# Instalar shadcn/ui
 npx shadcn-ui@latest init
-npx shadcn-ui@latest add button input form card toast dialog alert spinner
+npx shadcn-ui@latest add button input form card toast dialog alert
 
-# Estado global
-npm install zustand
+# Instalar dependencias de desarrollo
+npm install --save-dev @types/js-cookie prettier prettier-plugin-tailwindcss
+```
 
-# Forms y validación
-npm install react-hook-form @hookform/resolvers zod
+**.env.local:**
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_APP_NAME=JobPlatform
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id.googleusercontent.com
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-key
+```
 
-# Data fetching
-npm install @tanstack/react-query
-npm install axios
+### **Base de Datos (SQL Server)**
 
-# Autenticación
-npm install js-cookie
-npm install --save-dev @types/js-cookie
+```sql
+-- Crear base de datos
+CREATE DATABASE JobPlatformDB;
 
-# Google OAuth
-npm install @google-oauth2/client
+-- Ejecutar los stored procedures proporcionados
+-- Ver archivo: stored-procedures.sql
+```
 
-# Iconos
-npm install lucide-react
+## 🏃‍♂️ Ejecutar el Proyecto
 
-# Tema dark/light
-npm install next-themes
+### **Backend**
+```bash
+cd JobPlatform.Api
+dotnet run
+# API disponible en: http://localhost:5000
+# Swagger UI: http://localhost:5000/swagger
+```
 
-# Utilities
-npm install date-fns
-npm install react-hot-toast
+### **Frontend**
+```bash
+cd jobplatform-frontend
+npm run dev
+# App disponible en: http://localhost:3000
+```
 
-# Development
-npm install --save-dev eslint eslint-config-next
-npm install --save-dev @tailwindcss/eslint-plugin
-npm install --save-dev prettier prettier-plugin-tailwindcss
+## 📁 Estructura del Proyecto
+
+```
+JobPlatform/
+├── backend/
+│   ├── JobPlatform.Api/
+│   │   ├── Controllers/
+│   │   ├── Services/
+│   │   ├── Models/
+│   │   ├── DTOs/
+│   │   ├── Data/
+│   │   ├── Auth/
+│   │   └── Middleware/
+│   └── Database/
+│       └── StoredProcedures/
+├── frontend/
+│   ├── src/
+│   │   ├── app/                    # App Router
+│   │   ├── core/                   # Dominio
+│   │   ├── infrastructure/         # HTTP clients
+│   │   ├── presentation/           # UI components
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── stores/
+│   │   │   └── validators/
+│   │   └── shared/                 # Utils y tipos
+│   └── public/
+└── docs/
+```
+
+## 🔐 Sistema de Roles
+
+- **JobSeeker (1)**: Candidatos que buscan empleo
+- **Employer (2)**: Empresas que publican ofertas
+- **Admin (3)**: Administradores del sistema
+- **Moderator (4)**: Moderadores de contenido
+
+## 🛡️ Seguridad
+
+- JWT tokens con expiración
+- Refresh tokens en cookies HttpOnly
+- Validación de roles en rutas
+- CORS configurado
+- Headers de seguridad
+- Sanitización de inputs
+- Rate limiting (recomendado para producción)
+
+## 📦 Tecnologías Utilizadas
+
+### **Backend**
+- .NET 8
+- Dapper ORM
+- SQL Server
+- JWT Bearer Authentication  
+- Google OAuth
+- BCrypt para passwords
+- Serilog para logging
+- Swagger/OpenAPI
+
+### **Frontend**
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Zustand (estado global)
+- React Query (data fetching)
+- React Hook Form + Zod
+- Lucide React (iconos)
+
+## 🚀 Próximas Funcionalidades
+
+- [ ] Sistema de empleos (CRUD)
+- [ ] Búsqueda avanzada de empleos
+- [ ] Sistema de aplicaciones
+- [ ] Chat en tiempo real
+- [ ] Notificaciones push
+- [ ] Sistema de archivos/CV
+- [ ] Analytics y reportes
+- [ ] Pagos integrados
+- [ ] API de terceros (LinkedIn, etc.)
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crear rama feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Crear Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver [LICENSE.md](LICENSE.md) para detalles.
+
+## 👥 Equipo
+
+- **Desarrollo Full Stack**: Tu nombre
+- **UI/UX Design**: Tu nombre
+- **DevOps**: Tu nombre
+
+---
+
+⭐ **¡Dale una estrella al proyecto si te fue útil!**
