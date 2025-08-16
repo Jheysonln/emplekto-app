@@ -1,16 +1,16 @@
-// src/middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 /**
  * Middleware de Next.js para protección de rutas y redirecciones
+ * ✅ NO usa localStorage - solo lógica de rutas
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Obtener token de las cookies
-  const token = request.cookies.get('auth-token')?.value;
-  const isAuthenticated = !!token;
+  // Obtener token de las cookies (si tu backend usa HttpOnly cookies)
+  const refreshToken = request.cookies.get('refreshToken')?.value;
+  const isAuthenticated = !!refreshToken;
 
   // Rutas que requieren autenticación
   const protectedRoutes = [
@@ -18,9 +18,6 @@ export function middleware(request: NextRequest) {
     '/profile', 
     '/settings',
     '/users',
-    '/my-jobs',
-    '/jobs/post',
-    '/analytics'
   ];
 
   // Rutas solo para usuarios no autenticados
