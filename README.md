@@ -4,15 +4,6 @@ Una plataforma de empleo moderna construida con **Next.js 14**, **.NET 8** y **S
 
 ## 🏗️ Arquitectura del Sistema
 
-### **Backend (.NET 8)**
-- **API REST** con autenticación JWT
-- **Clean Architecture** simplificada (3 capas)
-- **Dapper ORM** con Stored Procedures
-- **Google OAuth** integrado
-- **SQL Server** como base de datos
-- **Serilog** para logging
-- **Swagger** para documentación
-
 ### **Frontend (Next.js 14)**
 - **App Router** con Route Groups
 - **Clean Architecture** con separación de capas
@@ -46,131 +37,148 @@ Una plataforma de empleo moderna construida con **Next.js 14**, **.NET 8** y **S
 - ✅ Error boundaries
 - ✅ Toast notifications
 
-## 🚀 Instalación y Configuración
+### **Frontend (Next.js 15)**
 
-### **Backend (.NET 8)**
-
-```bash
-# Crear proyecto API
-dotnet new webapi -n JobPlatform.Api
-cd JobPlatform.Api
-
-# Instalar paquetes NuGet
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
-dotnet add package Microsoft.AspNetCore.Authentication.Google
-dotnet add package System.IdentityModel.Tokens.Jwt
-dotnet add package Dapper
-dotnet add package Microsoft.Data.SqlClient
-dotnet add package BCrypt.Net-Next
-dotnet add package Serilog.AspNetCore
-
-# Configurar appsettings.json
-```
-
-**appsettings.json:**
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=JobPlatformDB;Trusted_Connection=true;TrustServerCertificate=true;"
-  },
-  "JwtSettings": {
-    "SecretKey": "your-super-secret-key-256-bits-minimum",
-    "Issuer": "JobPlatformAPI",
-    "Audience": "JobPlatformClient",
-    "AccessTokenExpirationMinutes": 60,
-    "RefreshTokenExpirationDays": 7
-  },
-  "GoogleAuth": {
-    "ClientId": "your-google-client-id.googleusercontent.com",
-    "ClientSecret": "your-google-client-secret"
-  }
-}
-```
-
-### **Frontend (Next.js 14)**
-
-```bash
-# Crear proyecto Next.js
-npx create-next-app@latest jobplatform-frontend --typescript --tailwind --eslint --app
-cd jobplatform-frontend
-
-# Instalar dependencias principales
-npm install zustand react-hook-form @hookform/resolvers zod @tanstack/react-query axios js-cookie next-themes date-fns clsx tailwind-merge class-variance-authority
-
-# Instalar shadcn/ui
-npx shadcn-ui@latest init
-npx shadcn-ui@latest add button input form card toast dialog alert
-
-# Instalar dependencias de desarrollo
-npm install --save-dev @types/js-cookie prettier prettier-plugin-tailwindcss
-```
-
-**.env.local:**
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-NEXT_PUBLIC_APP_NAME=JobPlatform
-NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id.googleusercontent.com
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-nextauth-secret-key
-```
-
-### **Base de Datos (SQL Server)**
-
-```sql
--- Crear base de datos
-CREATE DATABASE JobPlatformDB;
-
--- Ejecutar los stored procedures proporcionados
--- Ver archivo: stored-procedures.sql
-```
-
-## 🏃‍♂️ Ejecutar el Proyecto
-
-### **Backend**
-```bash
-cd JobPlatform.Api
-dotnet run
-# API disponible en: http://localhost:5000
-# Swagger UI: http://localhost:5000/swagger
-```
-
-### **Frontend**
-```bash
-cd jobplatform-frontend
-npm run dev
-# App disponible en: http://localhost:3000
 ```
 
 ## 📁 Estructura del Proyecto
-
 ```
-JobPlatform/
-├── backend/
-│   ├── JobPlatform.Api/
-│   │   ├── Controllers/
-│   │   ├── Services/
-│   │   ├── Models/
-│   │   ├── DTOs/
-│   │   ├── Data/
-│   │   ├── Auth/
-│   │   └── Middleware/
-│   └── Database/
-│       └── StoredProcedures/
-├── frontend/
-│   ├── src/
-│   │   ├── app/                    # App Router
-│   │   ├── core/                   # Dominio
-│   │   ├── infrastructure/         # HTTP clients
-│   │   ├── presentation/           # UI components
-│   │   │   ├── components/
-│   │   │   ├── hooks/
-│   │   │   ├── stores/
-│   │   │   └── validators/
-│   │   └── shared/                 # Utils y tipos
-│   └── public/
-└── docs/
-```
+└── 📁emplekto-app
+    └── 📁src
+        └── 📁app                          # 🚀 NEXT.JS 15 APP ROUTER
+            └── 📁(auth)                   # 📁 Route Group - Rutas de autenticación
+                └── 📁login
+                    ├── page.tsx           # 📄 Página de inicio de sesión
+                └── 📁register
+                    ├── page.tsx           # 📄 Página de registro de usuarios
+                ├── layout.tsx             # 🎨 Layout para rutas de auth (sin sidebar)
+            └── 📁(protected)              # 📁 Route Group - Rutas protegidas
+                └── 📁dashboard
+                    ├── page.tsx           # 📊 Dashboard principal con estadísticas
+                └── 📁profile
+                    ├── page.tsx           # 👤 Perfil del usuario actual
+                └── 📁users
+                    └── 📁[id]
+                        ├── page.tsx       # 👤 Detalle específico de usuario
+                    ├── page.tsx           # 👥 Lista de usuarios (admin/moderator)
+                ├── layout.tsx             # 🔒 Layout protegido con AuthGuard + Sidebar
+            ├── error.tsx                  # ⚠️ Página de error global
+            ├── favicon.ico                # 🏷️ Icono de la aplicación
+            ├── globals.css                # 🎨 Estilos globales + Variables CSS + Tailwind
+            ├── layout.tsx                 # 🏗️ Root layout con providers y metadata
+            ├── loading.tsx                # ⏳ Componente de loading global
+            ├── not-found.tsx              # 404 Página no encontrada
+            ├── page.tsx                   # 🏠 Landing page pública
 
+        └── 📁core                         # 🧠 BUSINESS LOGIC (Clean Architecture)
+            └── 📁entities                 # 📋 Entidades del dominio
+                ├── Auth.entity.ts         # 🔐 Entidades de autenticación (AuthSession, LoginCredentials)
+                ├── index.ts               # 📤 Barrel exports de todas las entidades
+                ├── User.entity.ts         # 👤 Entidades de usuario (User, CreateUserData, UpdateUserData)
+            └── 📁repositories            # 🔌 Interfaces de acceso a datos
+                ├── auth.repository.ts     # 🔐 Interface para operaciones de autenticación
+                ├── index.ts               # 📤 Barrel exports de repositorios
+                ├── user.repository.ts     # 👤 Interface para operaciones de usuarios
+            └── 📁use-cases               # 🎯 Lógica de negocio encapsulada
+                └── 📁auth                 # 🔐 Casos de uso de autenticación
+                    ├── google-login.use-case.ts    # 🔑 Login con Google OAuth
+                    ├── login.use-case.ts           # 🔑 Login tradicional con email/password
+                    ├── logout.use-case.ts          # 🚪 Cerrar sesión
+                    ├── refresh-token.use-case.ts   # 🔄 Renovar tokens de acceso
+                    ├── register.use-case.ts        # 📝 Registro de nuevos usuarios
+                └── 📁users                # 👥 Casos de uso de usuarios
+                    ├── activate-user.use-case.ts   # ✅ Activar usuario (admin)
+                    ├── deactivate-user.use-case.ts # ❌ Desactivar usuario (admin)
+                    ├── get-user.use-case.ts        # 👤 Obtener usuario por ID
+                    ├── get-users.use-case.ts       # 👥 Obtener lista paginada de usuarios
+                    ├── update-user.use-case.ts     # ✏️ Actualizar datos de usuario
+                ├── index.ts               # 📤 Barrel exports de todos los use cases
+
+        └── 📁infrastructure              # 🔌 EXTERNAL CONCERNS (APIs, Datos)
+            └── 📁api                      # 🌐 Clientes HTTP para comunicación con backend
+                └── 📁clients              # 📡 Clientes API específicos
+                    ├── auth-api.client.ts # 🔐 Cliente para endpoints de autenticación
+                    ├── base-api.client.ts # 🔧 Cliente base con configuración Axios
+                    ├── user-api.client.ts # 👤 Cliente para endpoints de usuarios
+                └── 📁interceptors         # ⚡ Interceptors HTTP
+                    ├── auth.interceptor.ts # 🔑 Interceptor para agregar tokens automáticamente
+                    ├── error.interceptor.ts # ⚠️ Interceptor para manejo global de errores
+            └── 📁mappers                  # 🔄 Conversión entre DTOs y Entities
+                ├── auth.mapper.ts         # 🔐 Mapeo AuthResponse ↔ AuthSession
+                ├── user.mapper.ts         # 👤 Mapeo UserDto ↔ User Entity
+            └── 📁repositories            # 🛠️ Implementaciones de los repositorios
+                ├── auth.repository.impl.ts # 🔐 Implementación AuthRepository usando API
+                ├── user.repository.impl.ts # 👤 Implementación UserRepository usando API
+            ├── index.ts                   # 📤 Barrel exports de infraestructura
+
+        └── 📁presentation                # 🎨 UI LAYER (React Components)
+            └── 📁components               # 🧩 Componentes React
+                └── 📁features             # 🎯 Componentes por funcionalidad
+                    └── 📁auth             # 🔐 Componentes de autenticación
+                        ├── login-form.tsx # 📝 Formulario de login con validación
+                        ├── logout-button.tsx # 🔴 Botón de logout con confirmación
+                    └── 📁dashboard        # 📊 Componentes del dashboard
+                        ├── dashboard-stats.tsx # 📈 Tarjetas de estadísticas
+                    └── 📁users            # 👥 Componentes de usuarios
+                        ├── user-form.tsx  # 📝 Formulario para editar usuario
+                        ├── users-table.tsx # 📋 Tabla de usuarios con paginación
+                └── 📁layouts              # 🏗️ Layouts reutilizables
+                    ├── auth-layout.tsx    # 🎨 Layout para páginas de auth (centrado)
+                    ├── main-layout.tsx    # 🎨 Layout principal con sidebar y navbar
+                └── 📁ui                   # 🎨 Componentes UI base (shadcn/ui)
+                    ├── button.tsx         # 🔘 Componente Button reutilizable
+                    ├── form.tsx           # 📝 Componentes de formulario
+                    ├── input.tsx          # ⌨️ Componente Input reutilizable
+                    ├── toast.tsx          # 🍞 Sistema de notificaciones
+                ├── index.ts               # 📤 Barrel exports de componentes
+            └── 📁guards                  # 🛡️ Protección de rutas
+                ├── auth-guard.tsx         # 🔒 Guard para rutas que requieren auth
+            └── 📁hooks                   # 🎣 Custom React Hooks
+                ├── use-api.ts             # 🌐 Hook para configuración React Query
+                ├── use-auth.ts            # 🔐 Hook para operaciones de autenticación
+                ├── use-users.ts           # 👥 Hook para operaciones de usuarios
+            └── 📁providers               # 🔧 Context Providers
+                ├── app.provider.tsx      # 🏗️ Provider principal que combina todos
+                ├── auth.provider.tsx     # 🔐 Provider para contexto de auth
+                ├── react-query.provider.tsx # 📡 Provider para React Query config
+            └── 📁stores                  # 🗄️ Estados globales (Zustand)
+                ├── auth.store.ts          # 🔐 Estado de autenticación (user, tokens)
+                ├── ui.store.ts            # 🎨 Estado de UI (theme, sidebar)
+                ├── user.store.ts          # 👥 Estado de usuarios (lista, filtros)
+            └── 📁validators              # ✅ Validación de formularios (Zod)
+                ├── auth.schemas.ts        # 🔐 Schemas para login, register, Google auth
+                ├── user.schemas.ts        # 👤 Schemas para CRUD de usuarios
+
+        └── 📁shared                      # 🛠️ UTILITIES (Código compartido)
+            └── 📁config                  # ⚙️ Configuraciones
+                ├── env.config.ts          # 🌍 Variables de entorno centralizadas
+            └── 📁constants               # 📋 Constantes de la aplicación
+                ├── api.constants.ts       # 🌐 URLs, endpoints, headers HTTP
+                ├── app.constants.ts       # 🏠 Rutas, query keys, roles, paginación
+            └── 📁types                   # 📝 Tipos TypeScript compartidos
+                ├── api.types.ts           # 🌐 Tipos para responses HTTP
+                ├── auth.types.ts          # 🔐 DTOs y enums de autenticación
+                ├── common.types.ts        # 🔧 Tipos comunes (ID, Pagination, Loading)
+            └── 📁utils                   # 🔧 Funciones utilitarias
+                ├── api.utils.ts           # 🌐 Helpers para APIs (error handling, URLs)
+                ├── cn.ts                  # 🎨 Utility para combinar clases Tailwind
+                ├── storage.ts             # 💾 Helpers para almacenamiento seguro
+        ├── middleware.ts                  # 🛡️ Next.js middleware (protección server-side)
+
+    ├── .editorconfig                      # ⚙️ Configuración del editor
+    ├── .env.example                       # 📄 Ejemplo de variables de entorno
+    ├── .env.local                         # 🔒 Variables de entorno locales (no en git)
+    ├── .gitignore                         # 🚫 Archivos ignorados por Git
+    ├── components.json                    # 🎨 Configuración de shadcn/ui
+    ├── next-env.d.ts                      # 📝 Tipos TypeScript de Next.js
+    ├── next.config.ts                     # ⚙️ Configuración de Next.js
+    ├── package-lock.json                  # 📦 Lock file de dependencias
+    ├── package.json                       # 📦 Dependencias y scripts
+    ├── postcss.config.mjs                 # 🎨 Configuración PostCSS para Tailwind
+    ├── README.md                          # 📚 Documentación del proyecto
+    ├── tailwind.config.js                 # 🎨 Configuración de Tailwind CSS
+    └── tsconfig.json                      # 📝 Configuración TypeScript
+```
 ## 🔐 Sistema de Roles
 
 - **JobSeeker (1)**: Candidatos que buscan empleo

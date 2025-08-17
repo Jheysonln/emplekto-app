@@ -1,13 +1,10 @@
-/* app/globals.css - Compatible con Tailwind CSS v4 */
-
+/* src/app/globals.css - VERSIÓN CORREGIDA */
 @import "tailwindcss";
 
 :root {
-  /* Tus variables existentes */
+  /* Light theme */
   --background: #ffffff;
   --foreground: #171717;
-  
-  /* Variables adicionales para shadcn/ui components */
   --card: #ffffff;
   --card-foreground: #171717;
   --popover: #ffffff;
@@ -28,41 +25,10 @@
   --radius: 0.5rem;
 }
 
-@theme inline {
-  /* Tus temas existentes */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  
-  /* Nuevas variables para shadcn/ui */
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --border-radius: var(--radius);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Tus variables dark existentes */
     --background: #0a0a0a;
     --foreground: #ededed;
-    
-    /* Variables dark para shadcn/ui */
     --card: #0a0a0a;
     --card-foreground: #ededed;
     --popover: #0a0a0a;
@@ -86,15 +52,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Estilos adicionales para los componentes */
-* {
-  border-color: var(--border);
-}
-
-/* Custom animations */
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -111,85 +72,11 @@ body {
 }
 
 /* Loading spinner */
-.spinner {
-  border: 2px solid var(--muted);
-  border-top: 2px solid var(--primary);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: spin 1s linear infinite;
-}
-
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* Smooth transitions */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* Focus states */
-*:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-/* Button hover effects */
-.button-hover:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Card shadows */
-.card-shadow {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-}
-
-.card-shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--muted);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--foreground);
-}
-
-/* Mobile improvements */
-@media (max-width: 768px) {
-  .mobile-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  .mobile-text {
-    font-size: 0.875rem;
-  }
-}
-
-/* Print styles */
-@media print {
-  * {
-    color-adjust: exact;
-  }
-  
-  .no-print {
-    display: none !important;
-  }
+.animate-spin {
+  animation: spin 1s linear infinite;
 }

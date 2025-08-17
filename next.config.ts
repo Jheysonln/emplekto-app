@@ -1,11 +1,12 @@
-// next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+// next.config.ts
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   images: {
     domains: [
-      'lh3.googleusercontent.com', // Google profile pictures
-      'avatars.githubusercontent.com', // GitHub avatars
-      'images.unsplash.com', // Unsplash images
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com', 
+      'images.unsplash.com',
     ],
   },
   env: {
@@ -14,6 +15,6 @@ const nextConfig = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     API_URL: process.env.API_URL,
   },
-}
+};
 
-module.exports = nextConfig
+export default nextConfig;
