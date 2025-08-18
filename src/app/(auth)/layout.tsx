@@ -9,5 +9,5 @@ export default function AuthGroupLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AuthLayout>{children}</AuthLayout>;
+  return children;
 }
